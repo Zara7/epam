@@ -34,6 +34,7 @@ class CalculatorPage {
 
     async selectOperatingSystem() {
         const osDropdown = await $(`//md-select[@ng-model='listingCtrl.computeServer.os']`);
+        await osDropdown.waitForClickable({ timeout: 5000 });
         await osDropdown.click();
         const option = await $(`//md-option[@value='free']`);
         await option.click();
@@ -118,21 +119,24 @@ class CalculatorPage {
     }
     async addToEstimate() {
         const addToEstimateButton =  await $(`//button[contains(text(), 'Add to Estimate') and not(@disabled)]`);
+        // await addToEstimateButton.waitForClickable({ timeout: 5000 });
         await addToEstimateButton.click();
 
         const emailEstimateButton = await $('//button[@title="Email Estimate"]');
+        await emailEstimateButton.waitForClickable({ timeout: 5000 });
         await emailEstimateButton.click();
-        
-        await browser.switchToParentFrame();
-        await browser.switchToParentFrame();
+
+        // const emailForm = await $('form[name="emailForm"]');
+        // await emailForm.waitForDisplayed({ timeout: 5000 });
+        // expect(await emailForm.isDisplayed(), 'Email form is not displayed').to.be.true; 
     }
-    //     async switchToCalculator() {
-    //     await browser.switchToWindow(this.windowHandles[0]);
-    //     const iframe = await $('//iframe[contains(@src, "calculator-legacy")]');
-    //     await browser.switchToFrame(iframe);
-    //     const myiframe = await $('iframe#myFrame');
-    //     await browser.switchToFrame(myiframe);
-    // }
+    async switchToCalculator(windowHandles) {
+        await browser.switchToWindow(windowHandles[0]);
+        const iframe = await $('//iframe[contains(@src, "calculator-legacy")]');
+        await browser.switchToFrame(iframe);
+        const myiframe = await $('iframe#myFrame');
+        await browser.switchToFrame(myiframe);
+    }
 }
 
 module.exports = CalculatorPage;

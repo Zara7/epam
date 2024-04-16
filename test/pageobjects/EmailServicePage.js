@@ -5,7 +5,7 @@ class EmailServicePage {
         await browser.switchToWindow(windowHandles[1]);
     }
 
-    async enterEmailAndRefresh() {
+    async enterEmail() {
         const emailInputElement = await $('input[id="login"]');
         await emailInputElement.setValue("epamtask3@yopmail.com");
         const email = await emailInputElement.getValue();
@@ -14,13 +14,23 @@ class EmailServicePage {
         await refreshButton.click();
     }
 
-    async verifyReceivedEmail(priceExpected) {
+    async verifyReceivedEmail(priceExpected, windowHandles) {
+        await browser.switchToWindow(windowHandles[1]);
+        const refreshButton = await $('/html/body/div[1]/div/div/main/div[2]/div[1]/div/div[1]/div[6]/button');
+        await refreshButton.click();
+
         const ifmailFrame = await $('//*[@id="ifmail"]');
         await browser.switchToFrame(ifmailFrame);
-        const priceInfoElement = await $('//*[@id="mail"]/div/div/table/tbody/tr[2]/td/table/tbody/tr[1]/td[4]');
-        await priceInfoElement.waitForExist();
-        const priceFromEmail = await priceInfoElement.getText();
-        expect(priceFromEmail).toContain(priceExpected);
+        const priceFromEmail = await $('//*[@id="mail"]/div/div/table/tbody/tr[2]/td/table/tbody/tr[1]/td[4]');
+        await priceFromEmail.waitForExist();
+
+        
+        await expect(priceFromEmail).toHaveTextContaining(priceExpected);
+
+        // const priceFromEmail = await priceInfoElement.getText();
+
+
+        // expect(priceFromEmail).toContain(priceExpected);
     }
 }
 

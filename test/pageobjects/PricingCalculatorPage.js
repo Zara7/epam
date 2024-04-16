@@ -1,14 +1,14 @@
 class PricingCalculatorPage {
-    constructor() {
-        this.windowHandles = [];
-    }
+    // constructor() {
+    //     this.windowHandles = [];
+    // }
 
     async sendEmailEstimate(email) {
-        this.windowHandles = await browser.getWindowHandles();
-        await this.switchToCalculator();
+        // this.windowHandles = await browser.getWindowHandles();
+        // await this.switchToCalculator();
         const emailInputElement = await $('input[type="email"]');
         await emailInputElement.setValue(email);
-        const sendButton = await $('button[aria-label="Send Email"]');
+        const sendButton =  await $('//*[@id="dialogContent_665"]/form/md-dialog-actions/button[2]');
         await sendButton.click();
     }
 

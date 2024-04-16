@@ -115,20 +115,14 @@ class CalculatorPage {
         const usageOptionElement = await $(`//*[@id="select_option_138"]`);
         await usageOptionElement.waitForDisplayed();
         await usageOptionElement.click();
-
     }
+    
     async addToEstimate() {
         const addToEstimateButton =  await $(`//button[contains(text(), 'Add to Estimate') and not(@disabled)]`);
-        // await addToEstimateButton.waitForClickable({ timeout: 5000 });
         await addToEstimateButton.click();
 
         const emailEstimateButton = await $('//button[@title="Email Estimate"]');
-        await emailEstimateButton.waitForClickable({ timeout: 5000 });
         await emailEstimateButton.click();
-
-        // const emailForm = await $('form[name="emailForm"]');
-        // await emailForm.waitForDisplayed({ timeout: 5000 });
-        // expect(await emailForm.isDisplayed(), 'Email form is not displayed').to.be.true; 
     }
     async switchToCalculator(windowHandles) {
         await browser.switchToWindow(windowHandles[0]);
